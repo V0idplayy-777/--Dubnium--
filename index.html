@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f3ee">
+<meta name="description" content="Games, experiments and other projects by Dubnium on Scratch.">
+<title>Dubnium — Scratch projects</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+:root{--paper:#f5f3ee;--ink:#20211e;--muted:#74756f;--line:#dcdad2;--acid:#d8fa65;--blue:#b8d9f8;--pink:#f4c7bd;--white:#fffefa;--serif:Georgia,serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"DM Sans",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+.wrap{width:min(1180px,calc(100% - 48px));margin:auto}
+.topbar{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.brand{font:700 19px "Space Grotesk",sans-serif;letter-spacing:-.07em}
+.brand span{display:inline-block;background:var(--acid);padding:4px 7px;margin-right:8px;letter-spacing:-.04em}
+.nav{display:flex;gap:27px;align-items:center;font-size:13px;color:#565750}
+.nav a:hover{color:#000;text-decoration:underline;text-underline-offset:4px}
+.nav .scratch-link{background:var(--ink);color:var(--white);padding:11px 15px;border-radius:3px}
+.hero{padding:76px 0 66px;display:grid;grid-template-columns:1.2fr .8fr;gap:50px;align-items:end}
+.eyebrow{font:11px "DM Mono",monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);display:flex;gap:10px;align-items:center}
+.eyebrow:before{content:"";height:1px;width:25px;background:currentColor}
+h1{font:600 clamp(56px,8vw,106px)/.91 "Space Grotesk",sans-serif;letter-spacing:-.085em;margin:25px 0 23px;max-width:700px}
+h1 em{font:italic 500 .94em var(--serif);letter-spacing:-.09em}
+.intro{font-size:16px;line-height:1.7;color:#5d5e58;max-width:450px;margin:0}
+.hero-aside{border-left:1px solid var(--line);padding:8px 0 6px 26px;margin-bottom:5px}
+.hero-aside .big-note{font:500 25px/1.25 "Space Grotesk",sans-serif;letter-spacing:-.045em;max-width:290px}
+.hero-aside .small-note{font:11px "DM Mono",monospace;color:var(--muted);margin-top:22px;text-transform:uppercase;letter-spacing:.06em}
+.tape{display:flex;align-items:center;gap:14px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 0;font:10px "DM Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);overflow:hidden;white-space:nowrap}
+.tape .dot{width:7px;height:7px;border-radius:50%;background:#7f9c39;flex:none}
+.tape .spacer{flex:1}
+.projects-head{display:flex;justify-content:space-between;align-items:end;padding:57px 0 24px}
+.section-kicker{font:10px "DM Mono",monospace;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+h2{font:600 clamp(31px,4vw,46px)/1 "Space Grotesk",sans-serif;letter-spacing:-.07em;margin:0}
+.project-count{font:11px "DM Mono",monospace;color:var(--muted)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:25px}
+.filter{border:1px solid var(--line);background:transparent;padding:8px 12px;border-radius:2px;color:#5c5d57;font-size:12px;cursor:pointer;transition:background .18s,border-color .18s}
+.filter:hover,.filter.active{background:var(--ink);border-color:var(--ink);color:white}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px 20px;padding-bottom:80px}
+.project{min-width:0;cursor:pointer;outline:none}
+.thumb{position:relative;aspect-ratio:4/3;background:#e6e3da;overflow:hidden;border:1px solid rgba(32,33,30,.07)}
+.thumb img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .35s cubic-bezier(.2,.75,.25,1)}
+.project:hover .thumb img,.project:focus-visible .thumb img{transform:scale(1.035)}
+.thumb .number{position:absolute;left:12px;top:12px;background:var(--paper);padding:6px 8px;font:10px "DM Mono",monospace}
+.thumb .arrow{position:absolute;right:12px;bottom:12px;width:35px;height:35px;background:var(--acid);display:grid;place-items:center;font-size:20px;opacity:0;transform:translate(-4px,4px);transition:.2s}
+.project:hover .arrow,.project:focus-visible .arrow{opacity:1;transform:none}
+.project-info{display:flex;justify-content:space-between;gap:12px;align-items:start;padding-top:13px}
+.project-title{font:600 18px "Space Grotesk",sans-serif;letter-spacing:-.045em;margin:0 0 6px}
+.project-desc{font-size:12px;line-height:1.55;color:var(--muted);margin:0}
+.project-type{font:9px "DM Mono",monospace;text-transform:uppercase;letter-spacing:.07em;border:1px solid var(--line);padding:6px 7px;white-space:nowrap;color:#686961}
+.empty{grid-column:1/-1;text-align:center;padding:50px 0;color:var(--muted)}
+.about{background:var(--acid);padding:70px 0 76px}
+.about-inner{display:grid;grid-template-columns:.7fr 1.3fr;gap:60px}
+.about-label{font:10px "DM Mono",monospace;text-transform:uppercase;letter-spacing:.13em}
+.about h2{font-size:clamp(38px,5vw,62px);max-width:400px;line-height:.98;margin-top:20px}
+.about-copy{font-size:17px;line-height:1.75;max-width:620px}
+.about-copy p{margin:0 0 16px}
+.about-foot{display:flex;gap:12px;flex-wrap:wrap;margin-top:27px}
+.pill-link{display:inline-flex;align-items:center;gap:12px;border:1px solid rgba(32,33,30,.45);padding:11px 14px;font-size:12px}
+.pill-link:hover{background:var(--ink);color:white}
+.footer{padding:25px 0;display:flex;justify-content:space-between;gap:15px;font:10px "DM Mono",monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.modal{position:fixed;inset:0;background:rgba(22,23,20,.72);z-index:5;display:none;place-items:center;padding:22px}
+.modal.open{display:grid}
+.modal-card{width:min(850px,100%);max-height:90vh;overflow:auto;background:var(--white);position:relative;display:grid;grid-template-columns:1.15fr .85fr}
+.modal-image{background:#e7e5dd;min-height:320px}
+.modal-image img{width:100%;height:100%;object-fit:cover;display:block}
+.modal-copy{padding:38px 30px;display:flex;flex-direction:column;align-items:start}
+.close{position:absolute;right:12px;top:12px;border:0;background:var(--white);width:36px;height:36px;font-size:22px;cursor:pointer}
+.modal-copy h3{font:600 35px/1 "Space Grotesk",sans-serif;letter-spacing:-.07em;margin:14px 0}
+.modal-copy p{font-size:14px;line-height:1.7;color:#65665f}
+.modal-cta{margin-top:auto;background:var(--ink);color:white;padding:13px 16px;font-size:12px;display:inline-flex;gap:20px;align-items:center}
+.modal-cta:hover{background:#45463f}
+@media(max-width:800px){.hero{grid-template-columns:1fr;gap:28px;padding:58px 0}.hero-aside{max-width:450px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 15px}.about-inner{grid-template-columns:1fr;gap:28px}.modal-card{grid-template-columns:1fr}.modal-image{min-height:0;aspect-ratio:16/9}.modal-copy{min-height:250px}}
+@media(max-width:520px){.wrap{width:calc(100% - 32px)}.topbar{height:62px}.nav{gap:13px}.nav a:not(.scratch-link){display:none}.hero{padding:48px 0}.hero-aside{padding-left:18px}.projects-head{padding-top:43px}.grid{grid-template-columns:1fr;gap:26px}.thumb{aspect-ratio:16/10}.project-title{font-size:20px}.about{padding:53px 0}.about-copy{font-size:15px}.footer{flex-direction:column}.modal-copy{padding:28px 22px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="wrap topbar">
+  <a class="brand" href="#"><span>D.</span> dubnium</a>
+  <nav class="nav" aria-label="Main navigation">
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a class="scratch-link" href="https://scratch.mit.edu/users/--Dubnium--/" target="_blank" rel="noreferrer">Scratch profile ↗</a>
+  </nav>
+</header>
+<main>
+  <section class="wrap hero">
+    <div>
+      <div class="eyebrow">Independent maker · Scratch</div>
+      <h1>Ideas, turned<br>into <em>something.</em></h1>
+      <p class="intro">Games, experiments and ambitious little systems built one block at a time. This is a home for the things I make on Scratch.</p>
+    </div>
+    <aside class="hero-aside">
+      <div class="big-note">Not just games.<br>Things to pull apart,<br>play with, and explore.</div>
+      <div class="small-note">A collection by @--Dubnium--</div>
+    </aside>
+  </section>
+  <div class="tape"><span class="dot"></span><span>Currently building</span><span>Games / engines / experiments</span><span class="spacer"></span><span>Made with Scratch ↗</span></div>
+  <section class="wrap" id="projects">
+    <div class="projects-head">
+      <div><div class="section-kicker">The collection / 01</div><h2>Selected projects</h2></div>
+      <div class="project-count" id="count">03 PROJECTS</div>
+    </div>
+    <div class="filters" id="filters" aria-label="Filter projects">
+      <button class="filter active" data-filter="all">Everything</button>
+      <button class="filter" data-filter="game">Games</button>
+      <button class="filter" data-filter="experiment">Experiments</button>
+      <button class="filter" data-filter="tool">Tools &amp; engines</button>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+  <section class="about" id="about">
+    <div class="wrap about-inner">
+      <div><div class="about-label">A little about me</div><h2>Curiosity is the whole point.</h2></div>
+      <div class="about-copy">
+        <p>I'm Dubnium, a Scratch creator who likes making projects that go a bit further than the usual. I’m interested in game systems, creative tools, engines, and seeing how much can be built inside Scratch.</p>
+        <p>I’d rather make something with moving parts to discover than leave an idea as just an idea. Some projects are games; others are experiments that grew legs.</p>
+        <div class="about-foot">
+          <a class="pill-link" href="https://scratch.mit.edu/users/--Dubnium--/" target="_blank" rel="noreferrer">Visit my Scratch profile <span>↗</span></a>
+          <a class="pill-link" href="#projects">Back to projects <span>↑</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="wrap footer"><span>© <span id="year"></span> Dubnium</span><span>Built for curiosity, not algorithms.</span><a href="https://scratch.mit.edu/users/--Dubnium--/" target="_blank" rel="noreferrer">Find me on Scratch ↗</a></footer>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-card">
+    <button class="close" id="close" aria-label="Close project details">×</button>
+    <div class="modal-image"><img id="modal-img" alt=""></div>
+    <div class="modal-copy"><div class="section-kicker" id="modal-category">PROJECT</div><h3 id="modal-title"></h3><p id="modal-desc"></p><a class="modal-cta" id="modal-link" href="#" target="_blank" rel="noreferrer">Open on Scratch <span>↗</span></a></div>
+  </div>
+</div>
+<script>
+const projects = [
+  {
+    id:"1393643888",
+    title:"Scratch project 01",
+    description:"A project from my Scratch profile. Open it to see the original project, notes and playable version.",
+    category:"game",
+    label:"Game",
+    colour:"#d8fa65"
+  },
+  {
+    id:"1392802665",
+    title:"Scratch project 02",
+    description:"Another project from the collection. The Scratch page has the full experience and project details.",
+    category:"experiment",
+    label:"Experiment",
+    colour:"#b8d9f8"
+  },
+  {
+    id:"1392677763",
+    title:"Scratch project 03",
+    description:"A project from my Scratch profile. Visit the original page to explore it and try it yourself.",
+    category:"tool",
+    label:"Tool / engine",
+    colour:"#f4c7bd"
+  }
+];
+const grid=document.getElementById("grid");
+const filters=document.getElementById("filters");
+const count=document.getElementById("count");
+const modal=document.getElementById("modal");
+const imageFor=id=>`https://cdn2.scratch.mit.edu/get_image/project/${id}_480x360.png`;
+function render(filter="all"){
+  const shown=projects.filter(p=>filter==="all"||p.category===filter);
+  count.textContent=String(shown.length).padStart(2,"0")+" PROJECT"+(shown.length===1?"":"S");
+  grid.innerHTML="";
+  if(!shown.length){grid.innerHTML='<div class="empty">Nothing in this section just yet.</div>';return}
+  shown.forEach((p,index)=>{
+    const card=document.createElement("article");
+    card.className="project";
+    card.tabIndex=0;
+    card.setAttribute("role","button");
+    card.setAttribute("aria-label",`Show details for ${p.title}`);
+    const thumb=document.createElement("div");
+    thumb.className="thumb";
+    thumb.style.background=p.colour;
+    const img=document.createElement("img");
+    img.src=imageFor(p.id);
+    img.alt=`Thumbnail for ${p.title}`;
+    img.loading="lazy";
+    img.onerror=()=>{img.style.display="none";thumb.style.background=p.colour;thumb.insertAdjacentHTML("beforeend",`<div style="height:100%;display:grid;place-items:center;font:600 28px 'Space Grotesk',sans-serif;letter-spacing:-.06em;color:#20211e">DUBNIUM <span style="font:11px 'DM Mono',monospace;display:block;letter-spacing:.08em">PROJECT ${String(index+1).padStart(2,"0")}</span></div>`)};
+    const number=document.createElement("span");
+    number.className="number";
+    number.textContent=String(index+1).padStart(2,"0")+" / 03";
+    const arrow=document.createElement("span");
+    arrow.className="arrow";
+    arrow.textContent="↗";
+    thumb.append(img,number,arrow);
+    const info=document.createElement("div");
+    info.className="project-info";
+    const copy=document.createElement("div");
+    const title=document.createElement("h3");
+    title.className="project-title";
+    title.textContent=p.title;
+    const desc=document.createElement("p");
+    desc.className="project-desc";
+    desc.textContent=p.description;
+    copy.append(title,desc);
+    const tag=document.createElement("span");
+    tag.className="project-type";
+    tag.textContent=p.label;
+    info.append(copy,tag);
+    card.append(thumb,info);
+    const open=()=>showProject(p);
+    card.addEventListener("click",open);
+    card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open()}});
+    grid.append(card);
+  });
+}
+function showProject(p){
+  document.getElementById("modal-img").src=imageFor(p.id);
+  document.getElementById("modal-img").alt=`Thumbnail for ${p.title}`;
+  document.getElementById("modal-title").textContent=p.title;
+  document.getElementById("modal-desc").textContent=p.description;
+  document.getElementById("modal-category").textContent=p.label;
+  document.getElementById("modal-link").href=`https://scratch.mit.edu/projects/${p.id}/`;
+  modal.classList.add("open");
+  document.getElementById("close").focus();
+}
+function closeModal(){modal.classList.remove("open")}
+filters.addEventListener("click",e=>{
+  const button=e.target.closest("button[data-filter]");
+  if(!button)return;
+  filters.querySelectorAll("button").forEach(b=>b.classList.toggle("active",b===button));
+  render(button.dataset.filter);
+});
+document.getElementById("close").addEventListener("click",closeModal);
+modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+document.getElementById("year").textContent=new Date().getFullYear();
+render();
+</script>
+</body>
+</html>
